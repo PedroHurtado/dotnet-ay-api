@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/dotnet-ay-api.props" />
+</Project>

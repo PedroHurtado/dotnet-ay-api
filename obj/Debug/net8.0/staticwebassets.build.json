@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "QEXSo2TMn9Zh1jMDwtMNt5UYHZc8nXoHNrF8HGFCXK4=",
+  "Source": "dotnet-ay-api",
+  "BasePath": "_content/dotnet-ay-api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
