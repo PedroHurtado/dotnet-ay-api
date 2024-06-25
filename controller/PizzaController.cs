@@ -1,36 +1,121 @@
 using Microsoft.AspNetCore.Mvc;
+using IOC;
+using Segregation;
+using System.Reflection.Metadata.Ecma335;
+using System.Collections;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System.Runtime.CompilerServices;
 
 
-namespace Controller{
-    
+
+namespace Controller
+{
+
+
+    class NotFoudnException : Exception{
+
+    }
+
+    public static class IEnumerableNotFound{
+        public static T ResultOrNotFound<T>(this IEnumerable<T>value){
+            var result = value.FirstOrDefault();
+            if(result==null){
+                throw new NotFoudnException();
+            }
+            return result;
+        }
+    }
+    class Foo : IActionResult
+    {
+        public Task ExecuteResultAsync(ActionContext context)
+        {
+            var result = new ObjectResult(null);
+            return result.ExecuteResultAsync(context);
+        }
+    }
+    public class Service : IService
+    {
+        public void Add()
+        {
+            //throw new NotImplementedException();
+        }
+    }
+    public interface IService
+    {
+        void Add();
+    }
+
+    public class MyControllerBase:ControllerBase{
+        protected IActionResult OkOrNotFound<T>(IEnumerable<T> query){
+            var result = query.FirstOrDefault();
+            if(result == null){
+                return 
+                NotFound();
+            }
+            return Ok(result);
+        }
+    }
     [ApiController]
     [Route("[controller]")]
-    public class PizzasController: ControllerBase{
+    public class PizzasController : MyControllerBase
+    {
 
-         public readonly record struct Person(string FirstName, string LastName);
+        //private readonly List<int?> list = [22,39,30,40,50,80];
+        private readonly List<int?> list = new List<int?> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        private readonly IService _service;
+        private readonly IB _b;
+        private readonly IUpdate<Customer, int> _updateCustomer;
+        public PizzasController(IService service, IB b, IUpdate<Customer, int> updateCustomer)
+        {
+            _service = service;
+            _b = b;
+            _updateCustomer = updateCustomer;
+            Console.WriteLine("Controlador");
+
+        }
+        public readonly record struct Person(string FirstName, string LastName);
         [HttpGet]
-        public string GetAll(){
+        public string GetAll()
+        {
             return "Hello World";
         }
 
         [HttpGet("{id}")]
-        public string Get(int id){            
-            return id.ToString();
+        public int? Get(int id)
+        {
+
+            return list.Where(v=>v ==id).ResultOrNotFound();
+            //return OkOrNotFound(list.Where(v=>v==id));
+            //return list.Where(v=>v==id).OkOrNotFound()
+
+            //var result = list.Where(v => v == id).FirstOrDefault();
+
+            //if (result == null)
+            //{
+            //    return NotFound();
+            //}
+            //return Ok(result);
+            //throw new Exception("El id no existe");
+            //return id.ToString();
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody]Person person){
-            return Created("",person);
+        public IActionResult Add([FromBody] Person person)
+        {
+            _service.Add();
+            return Created("", person);
         }
         [HttpPut("{id}")]
-        public Person Update(int id, [FromBody]Person person){
+        public Person Update(int id, [FromBody] Person person)
+        {
             return person;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Remove(int id){
+        public IActionResult Remove(int id)
+        {
             return NoContent();
         }
-        
+
     }
 }

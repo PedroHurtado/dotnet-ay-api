@@ -1,12 +1,32 @@
 using Controller;
+using IOC;
+using Segregation;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//https://learn.microsoft.com/es-es/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-8.0
+
+builder.Services.AddScoped<IB, B>();
+builder.Services.AddScoped<IService, Service>();
+builder.Services.AddScoped<IC, C>();
+
+builder.Services.AddScoped(typeof(IAll<,>), typeof(Repository<,>));
+builder.Services.AddScoped(typeof(IUpdate<,>), typeof(Repository<,>));
+builder.Services.AddScoped(typeof(IRemove<,>), typeof(Repository<,>));
+//builder.Services.AddScoped(typeof(IAdd<>), typeof(Repository<,>));
+builder.Services.AddScoped(typeof(IGet<,>), typeof(Repository<,>));
+
+
+
+//builder.Services.AddTransient<IService, Service>();
+//builder.Services.AddScoped<IService, Service>();
+//builder.Services.AddSingleton<IService, Service>();
 
 var app = builder.Build();
 

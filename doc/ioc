@@ -1,0 +1,34 @@
+interface IA{
+
+}
+class A:IA{
+
+}
+
+IA a = new A()
+
+
+
+
+
+Transient->builder.Services.AddTransient<IService, Service>(); -menos optimo
+
+A->B        new B()   IB b
+C->B        new B()   IB b
+
+Los objetos transiengt son siempre diferentes; 
+Se proporciona una nueva instancia a cada controlador y a cada servicio.
+
+Scoped->builder.Services.AddScoped<IService, Service>(); +optimo
+            new B()(Request)
+A->B
+C->B
+
+Los objetos con alcance son los mismos dentro de una solicitud, 
+pero diferentes en diferentes solicitudes.
+        new B()(por todos los request Request)
+A->B
+C->B
+
+singleton->builder.Services.AddSingleton<IService, Service>(); ++optimo
+Los objetos singleton son los mismos para cada objeto y cada solicitud.

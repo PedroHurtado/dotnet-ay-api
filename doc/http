@@ -1,0 +1,36 @@
+/pizzas/1       piizas/{id} GET,DELETE,PUT|PATH    [HttpGet,HtppDelete,HttpPut, HttpPatch]
+
+method (int id){
+
+}
+
+pizzas->Created                     FromBody
+pizzas/{id}->Update,Delete path     FromBody
+
+1. Escenario
+            Bad                     Good
+    GET     /person/52803357A       Headers->x-<name>:http valid character
+
+2. Query
+   /pizzas?name=car&page=1&size=25
+
+   QueryString
+
+   ¿Preparar un metodo donde podamos enviar la siguiente url
+
+    /pizzas?name=car&page=1&size=25
+
+
+   Si page no se pasa por la url page=1
+   Si no pasamos size su valor es por defecto 25
+
+   get QueryString params .net core 8.0
+
+   https://code-maze.com/aspnetcore-read-values-from-query-strings/
+
+   Un verbo no correcto
+
+   DELETE
+        1. Soporta queryString si(todos los verbos http)
+        2  Delete soporta [FromBody]
+        3  GET es el unico verbo que no soporta Body en el request

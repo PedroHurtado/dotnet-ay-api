@@ -1,0 +1,31 @@
+1. Result(IActionResult)
+
+    Si en la bb.dd no existe el recurso solicitado devuelve
+    un notfound
+
+    Si existe devuelve el valor
+
+    ¿Es más rapido esto que lanzar un throw?->No
+    ¿Estás dispuesto a escribir el if por cada controlador?
+
+    ¿Como solionarias no escribir el if?
+
+    OkOrNotFound()
+
+    Extension Method  de IEnumerable<T>
+    //https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods
+
+ 2. Crear custom exception
+    -Controlar un global handler exception
+        IExceptionHandler   - dontet 8
+        MiddelWare
+            try{
+
+            }
+            cath{
+
+            }
+
+            ¿Que pasa con los metodos PUT Y DELETE?
+
+            Leer(No exista)
