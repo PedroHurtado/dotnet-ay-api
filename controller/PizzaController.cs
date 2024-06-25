@@ -1,25 +1,46 @@
 using Microsoft.AspNetCore.Mvc;
 using IOC;
 using Segregation;
-using System.Reflection.Metadata.Ecma335;
-using System.Collections;
-using Microsoft.AspNetCore.Http.HttpResults;
-using System.Runtime.CompilerServices;
-
-
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace Controller
 {
 
+    internal sealed class GlobalExceptionHandler : IExceptionHandler
+    {
+        public async  ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+        {
+            if (exception is not NotFoudnException e)
+            {
+                return false;
+            }
 
-    class NotFoudnException : Exception{
+            var problemDetails = new ProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Bad Request",
+                Detail = "No existe"
+            };
+            httpContext.Response.StatusCode = problemDetails.Status.Value;
+
+            await httpContext.Response
+                .WriteAsJsonAsync(problemDetails, cancellationToken);
+
+            return true;
+        }
+    }
+    class NotFoudnException : Exception
+    {
 
     }
 
-    public static class IEnumerableNotFound{
-        public static T ResultOrNotFound<T>(this IEnumerable<T>value){
+    public static class IEnumerableNotFound
+    {
+        public static T ResultOrNotFound<T>(this IEnumerable<T> value)
+        {
             var result = value.FirstOrDefault();
-            if(result==null){
+            if (result == null)
+            {
                 throw new NotFoudnException();
             }
             return result;
@@ -45,11 +66,14 @@ namespace Controller
         void Add();
     }
 
-    public class MyControllerBase:ControllerBase{
-        protected IActionResult OkOrNotFound<T>(IEnumerable<T> query){
+    public class MyControllerBase : ControllerBase
+    {
+        protected IActionResult OkOrNotFound<T>(IEnumerable<T> query)
+        {
             var result = query.FirstOrDefault();
-            if(result == null){
-                return 
+            if (result == null)
+            {
+                return
                 NotFound();
             }
             return Ok(result);
@@ -84,7 +108,7 @@ namespace Controller
         public int? Get(int id)
         {
 
-            return list.Where(v=>v ==id).ResultOrNotFound();
+            return list.Where(v => v == id).ResultOrNotFound();
             //return OkOrNotFound(list.Where(v=>v==id));
             //return list.Where(v=>v==id).OkOrNotFound()
 

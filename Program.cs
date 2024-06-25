@@ -21,7 +21,8 @@ builder.Services.AddScoped(typeof(IUpdate<,>), typeof(Repository<,>));
 builder.Services.AddScoped(typeof(IRemove<,>), typeof(Repository<,>));
 //builder.Services.AddScoped(typeof(IAdd<>), typeof(Repository<,>));
 builder.Services.AddScoped(typeof(IGet<,>), typeof(Repository<,>));
-
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 
 //builder.Services.AddTransient<IService, Service>();
@@ -36,6 +37,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
