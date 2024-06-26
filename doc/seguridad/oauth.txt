@@ -1,0 +1,63 @@
+1. Un solo user y pwd
+
+    -Se guarda en lo que sería un proveedor de identidad(ISP)
+     Google,Microsoft,Linkedin,Twiter,Faceboock,Github
+1.1 Registrar tu apliation en el ISP
+    name:ayesa
+    url:https://ayesa.com
+    redirect_uri: https://ayesa/login/github
+    client_id:79897997821
+    client_secret: dfasdfasdfasdfafas
+
+developer
+
+1. Creo un formulario(GET)
+   <form method:'POST', action="/login/github">
+        <button type="submit>Login con Github</button>
+   </form>
+2. /login/github
+
+3. redirect https://github.com/login/oauth/authorize
+
+    1. No esta autenticado->login
+    2. Está autenticado->
+        2.1. Primera vez nos pide los permisos
+        2.2  No solicita nada(excepto que el usuario revoque permisos en el isp->2.1)
+
+    ?client_id&redirect_uri&scope(queryString)
+
+        scope=read-user,user-email
+4.  redirect_uri /login/github GET
+    ?code=afsdfasdfasdfasdfasdfsf
+
+5.  Servidor->Servidor(ISP)->github
+
+    POST https://github.com/login/oauth/access_token
+
+    {
+        client_id,
+        client_secret,
+        code,
+        scope,
+        redirect_uri
+    }
+5.1 Response
+    Accept: application/json
+    {
+        "access_token":"gho_16C7e42F292c6912E7710c838347Ae178B4a",
+
+            NO SE DEBE DE GUARDAR NUNCA
+        "scope":"repo,gist",
+        "token_type":"bearer"
+    }
+6. GET
+    Authorization: Bearer OAUTH-TOKEN
+    GET https://api.github.com/user
+
+    {
+        firstName,
+        lastName,
+        email,
+    }
+7. Guardar en una bb.dd si es la primera vez
+8. Generar o mi JWT o mi cookie(autentico y autrorizo)

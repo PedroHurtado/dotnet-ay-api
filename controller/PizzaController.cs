@@ -137,7 +137,7 @@ namespace Controller
 
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
-        {
+        {            
             return NoContent();
         }
 

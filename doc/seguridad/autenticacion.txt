@@ -1,0 +1,103 @@
+1. Autentication
+    user,pwd
+    oauth, openid
+    passkey
+        //https://web.dev/articles/passkey-registration?hl=es-419
+
+.user,pwd
+    POST
+    {
+        user:pedrohurt@gmail.com
+        pwd:12345  -> $2a$12$xyX0JLrVUez.kFYdrE6VEeiOuqH9Xl1Clmkb/DDgJf3EQVh0nJwuq
+    }
+
+    nunca http->https
+
+    Es comprobar user y pwd->pedro hurtado
+    bcrypt
+
+    Bad
+    "El password es incorrecto"
+    "El usuario no existe"
+    Goo
+    "Usuario o password no es correcto"
+
+    email->token de recuperacion
+
+    {
+        tokne:4578afsdfasdfasdf
+        email:'antonio@gmail.com"
+        timeout: 3000ms
+    }
+
+    Compruebo que antonio@gmail.con no existe como usuario
+
+Login correcto
+    1. web
+    2. No web
+
+    Token(Web, No web)
+        Token(JWT)->eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+        1. parte->base64(codificacion)->headers
+        2. parte->base64(claims)->objeto con la description del usuarioi,caducidad,etc
+        3. parte->secret->dato asimetrico->HS256->secret
+
+        Autorizathion: bearer xxxx.yyy.zzz
+
+        
+    Cookie(Web)
+        cabecera
+            https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie
+            set-Cookie: 
+        como debe de ser la Cookie
+            HttpOnly->no se puede leer con document.Cookie(js)
+            secure->solo es valida para el protocolo(https)
+
+            set-Cookie=session_id=xadsasddssd;Httponly;Secure
+        Request
+            cookie
+
+    ¿Que tiempo es valida la cookie o el token?
+
+    3600 s->hora
+
+    refresh->cookie,token
+
+    Las cookies se guardan en el explorador sin el control del usuario
+
+    ¿Donde guardo los tokens?
+
+    LocalStorage(Noo)
+        1. LocalStorage es sincrono(bloqueante)
+        2. Serializar cada vez que leo(problema de rendimiento)
+            string->objeto
+            object->string
+        3. No trabajo con hilos secundarios(Worker, ServiceWorker)
+    InDexDb(Ok)
+        1. Es asincrono
+        2. No hace falta Serializar
+        3. Puede trabajar con hijos(Worker,ServiceWorker)
+
+        ¿Como protejo mi token para que no me roben?
+
+            HttpOnly
+
+        const script = document.createElement('script')
+        script.textContent = "alert(1)"
+        document.head.appendChild(script)
+
+        https://www.w3.org/TR/CSP3/
+
+Solucion (XSS)
+    cookie->httponly,secure
+    token->guardar en indexdb
+    activar en vuestra web CSP(Politicas de contenido seguro)
+
+¿Como haría yo esto en .net?
+
+    1. Endpoint no protegido que reciba user o pwd
+    2. Middelware que controle las cookie o los token(jwt)
+
+    https://learn.microsoft.com/es-es/aspnet/web-api/overview/security/authentication-and-authorization-in-aspnet-web-api
+    https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/security?view=aspnetcore-8.0

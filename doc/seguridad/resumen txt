@@ -1,0 +1,11 @@
+web->y mismos dominios->cookie
+    httponly
+    secure
+terceros,mobiles,server->token
+
+web->csp->suprimo en la web el xss
+web->csrf
+cors->* | dominio perteneciente a un lista
+       Nunca devolver el mismo dominio que llega
+
+Validaciones->siempre en el servidor

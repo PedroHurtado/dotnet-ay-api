@@ -1,0 +1,38 @@
+1. En la web
+    se hace una llamada entre dominios diferentes
+
+    cuando el esquema (http,https)
+    el dominio o el puerto son diferentes
+
+El explorador sin que nosotros lo agreguemos agrega automaticamente 
+la cabecera origin
+
+
+localhost:8080
+    origin:http://localhost:8080
+localhost:8081
+    Access-Control-Allow-Origin:http://localhost:8080 | * 
+    Access-Control-Allow-Methods:GET,POST,PUT
+
+    OPTIONS (2 ROUNTRING)
+
+        OPTIONS
+        GET|POST|PUT|DELETE 
+
+    Access-Control-Max-Age->No negocie el options hasta transcurrido x tiempo
+
+    https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request
+
+
+    
+https://learn.microsoft.com/es-es/aspnet/core/security/cors?view=aspnetcore-8.0
+
+
+Habilita cors y devuelve como dominio autorizado el mismo que nos llega
+Autenticarse por cookie
+
+CSRF->POST,PUT,DELETE,...GET
+
+origin:*
+No puedo autenticar por cookies
+
