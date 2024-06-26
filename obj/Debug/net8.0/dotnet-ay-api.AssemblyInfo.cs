@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("dotnet-ay-api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3800b07106ccc6b96df96d48fe867a9061cfafcd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96ce95bc2f91f73ff9043c336bbf37bc4a7a2004")]
 [assembly: System.Reflection.AssemblyProductAttribute("dotnet-ay-api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("dotnet-ay-api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

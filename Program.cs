@@ -44,10 +44,15 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
+/*app.UseEndpoints(c=>{
+
+});*/
+
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
+
 
 app.MapGet("/weatherforecast", () =>
 {

@@ -17,8 +17,8 @@ namespace Controller
 
             var problemDetails = new ProblemDetails
             {
-                Status = StatusCodes.Status400BadRequest,
-                Title = "Bad Request",
+                Status = StatusCodes.Status404NotFound,
+                Title = "Not Found",
                 Detail = "No existe"
             };
             httpContext.Response.StatusCode = problemDetails.Status.Value;
